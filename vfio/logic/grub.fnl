@@ -11,7 +11,7 @@
    :description "Enable IOMMU on Intel CPU."}
   :iommu
    {:key :iommu :value "pt"
-    :description "Prevent Linux from touching devices that cannot be passed through."}
+    :description "Skip devices that cannot be passed through."}
   :pci-stub.ids
    {:key :pci-stub.ids :value nil
     :description "Bind the following devices to ensure that they will be available for the VM:"}
@@ -22,8 +22,22 @@
 (fn logic.build-kernel-options [devices]
   (let [kernel-options (helper/list.deep-shallow-copy logic.kernel-options)
         devices-ids (collect [key device (pairs devices)] key device.id)]
-    (tset (. kernel-options :pci-stub.ids) :value (helper/list.join "," devices-ids))
-    kernel-options))
+    (tset
+      (. kernel-options :pci-stub.ids)
+      :value
+      (->> devices-ids
+        (helper/list.sort)
+        (helper/list.join ",")))
+
+    (local options [])
+
+    (each [_ option (pairs kernel-options)]
+      (table.insert options option))
+
+    (->>
+      options
+      (helper/list.sort-by :value)
+      (helper/list.sort-by :key))))
 
 (fn logic.get-cmdline-linux [raw]
   (var cmdline-linux nil)

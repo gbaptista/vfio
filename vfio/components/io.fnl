@@ -4,9 +4,15 @@
 
 (fn component.directory-for [purpose]
   (match purpose
-    :data       (component.build-directory "XDG_DATA_HOME" "/.local/share")
-    :config     (component.build-directory "XDG_CONFIG_HOME" "/.config")
-    :executable (component.build-directory nil "/.local/bin")))
+    :data        (component.build-directory "XDG_DATA_HOME" "/.local/share")
+    :config      (component.build-directory "XDG_CONFIG_HOME" "/.config")
+    :shared-data (component.shared-data-direcotry)
+    :executable  (component.build-directory nil "/.local/bin")))
+
+(fn component.shared-data-direcotry []
+  (let [working-directory (or (os.getenv "FNX_WORKING_DIRECTORY")
+                              (component.current-directory))]
+    (.. working-directory "/data")))
 
 (fn component.build-directory [env-var default]
   (or
@@ -25,9 +31,6 @@
 
 (fn component.os [command]
   (os.execute command))
-
-(fn component.safe-os [command]
-  (pcall os.execute command))
 
 (fn component.ensure-directory [path]
   (os.execute (.. "mkdir -p " path)))

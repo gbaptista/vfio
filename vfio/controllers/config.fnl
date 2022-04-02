@@ -36,6 +36,6 @@
     (controller.write! config)))
 
 (fn controller.path []
-  (.. (component/io.directory-for :data) "/vfio.fnl"))
+  (.. (component/io.directory-for :shared-data) "/config.fnl"))
 
 controller
