@@ -11,6 +11,8 @@
      [:line "  vfio"]
      [:line "  vfio [id]"]
      [:line "  vfio [id] [attribute] [value]"]
+     [:line "  vfio [id] passthrough true"]
+     [:line "  vfio grub"]
      [:line "  vfio config"]
      [:line "  vfio help"]
      [:line ""]]))

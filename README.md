@@ -13,6 +13,8 @@ A command-line interface to help you set up [VFIO](https://www.kernel.org/doc/ht
 vfio
 vfio [id]
 vfio [id] [attribute] [value]
+vfio [id] passthrough true
+vfio grub
 vfio config
 vfio help
 ```
