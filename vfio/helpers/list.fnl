@@ -5,6 +5,12 @@
     (tset result :n (select "#" ...))
     result))
 
+(fn helper.deep-shallow-copy [from ?to]
+  (collect [k v (pairs (or from [])) :into (or ?to {})]
+    (if (= (type v) "table")
+      (values k (helper.deep-shallow-copy v))
+      (values k v))))
+
 (fn helper.pack [...]
   (let [pack-fn (or (. table :pack) helper.legacy-pack)]
     (pack-fn ...)))
