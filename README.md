@@ -10,9 +10,9 @@ A command-line interface to help you set up [VFIO](https://www.kernel.org/doc/ht
 
 ## Usage
 ```bash
-vfio list
-vfio get [id]
-vfio set [id] [attribute] [value]
+vfio
+vfio [id]
+vfio [id] [attribute] [value]
 vfio config
 vfio help
 ```

@@ -20,7 +20,7 @@
           [$1.class.name :right]
           [(controller.flags $1) :center #(sn.red $1)]
           [$1.id :center #(sn.yellow $1)]
-          [$1.name.name :left]
+          [$1.name.name :left #(sn.cyan $1)]
           [$1.vendor.name :left]])))
 
     (port/shell-out.dispatch! [[:table output]])))
