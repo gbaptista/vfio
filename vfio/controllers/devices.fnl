@@ -10,12 +10,14 @@
 
 (local controller {})
 
+(fn controller.handle! [arguments]
+  (controller/config.set! arguments)
+  (controller.get! arguments))
+
 (fn controller.list! [arguments]
   (let [devices (controller.devices!)]
     (local output
       (->> devices
-        (helper/list.sort-by :name :name)
-        (helper/list.sort-by :class :name)
         (helper/list.map #[
           [$1.class.name :right]
           [(controller.flags $1) :center #(sn.red $1)]
@@ -30,10 +32,6 @@
   (when (= (. device.config :passthrough) true)
     (table.insert flags "p"))
   (helper/list.join " " flags))
-
-(fn controller.set! [arguments]
-  (controller/config.set! arguments)
-  (controller.get! arguments))
 
 (fn controller.get! [arguments]
   (let [devices (controller.devices!)
@@ -64,10 +62,12 @@
     (port/shell-out.dispatch! [[:table device-output]])))
 
 (fn controller.devices! [arguments]
-  (let [config  (controller/config.load! arguments)]
+  (let [config  (controller/config.load!)]
     (->> "lspci -nnmmD"
       (component/io.os-output)
       (logic/lspci.parse-devices)
-      (logic/config.hydrate config))))
+      (logic/config.hydrate config)
+      (helper/list.sort-by :name :name)
+      (helper/list.sort-by :class :name))))
 
 controller

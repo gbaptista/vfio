@@ -26,6 +26,9 @@
 (fn component.os [command]
   (os.execute command))
 
+(fn component.safe-os [command]
+  (pcall os.execute command))
+
 (fn component.ensure-directory [path]
   (os.execute (.. "mkdir -p " path)))
 
@@ -50,5 +53,10 @@
   (match (io.open file-path :w)
     (nil message) (error message)
     file          (do (: file :write content) (: file :close))))
+
+(fn component.safe-write [file-path content]
+  (match (io.open file-path :w)
+    (nil message) message
+    file          (do (: file :write content) (: file :close) nil)))
 
 component
