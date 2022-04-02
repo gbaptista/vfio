@@ -58,11 +58,21 @@
   (table.sort list)
   list)
 
-(fn helper.sort-by [key list]
+(fn helper.sort-by [key list ?nested]
+  (if ?nested
+    (helper.sort-by-nested key list ?nested)
+    (do
+      (table.sort list (fn [a b]
+        (if (or (= (type (. a key)) :boolean) (= (type (. b key)) :boolean))
+          (< (tostring (. a key)) (tostring (. b key)))
+          (< (. a key) (. b key)))))
+      list)))
+
+(fn helper.sort-by-nested [key-a key-b list]
   (table.sort list (fn [a b]
-    (if (or (= (type (. a key)) :boolean) (= (type (. b key)) :boolean))
-      (< (tostring (. a key)) (tostring (. b key)))
-      (< (. a key) (. b key)))))
+    (if (or (= (type (. (. a key-a) key-b)) :boolean) (= (type (. (. b key-a) key-b)) :boolean))
+      (< (tostring (. (. a key-a) key-b)) (tostring (. (. b key-a) key-b)))
+      (< (. (. a key-a) key-b) (. (. b key-a) key-b)))))
   list)
 
 (fn helper.sort-by-f [f list]

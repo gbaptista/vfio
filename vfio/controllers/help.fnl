@@ -4,6 +4,13 @@
 (local controller {})
 
 (fn controller.handle! []
-  (port/shell-out.dispatch! (logic/smk.line "vfio 0.0.1")))
+  (port/shell-out.dispatch!
+    [[:line "vfio 0.0.1"]
+     [:line ""]
+     [:line "usage:"]
+     [:line "  vfio list"]
+     [:line "  vfio get [id]"]
+     [:line "  vfio set [id] [attribute] [value]"]
+     [:line ""]]))
 
 controller

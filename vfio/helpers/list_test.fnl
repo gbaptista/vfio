@@ -37,6 +37,11 @@
   (helper.sort-by :l [{:l "b"} {:l "d"} {:l "c"} {:l "a"}])
   [{:l "a"} {:l "b"} {:l "c"} {:l "d"}])
 
+
+(t.eq
+  (helper.sort-by :l :j [{:l {:j "b"}} {:l {:j "d"}} {:l {:j "c"}} {:l {:j "a"}}])
+  [{:l {:j "a"}} {:l {:j "b"}} {:l {:j "c"}} {:l {:j "d"}}])
+
 (t.eq
   (helper.filter #(= (. $1 :l) "b") [{:l "b"} {:l "d"} {:l "c"} {:l "a"}])
   [{:l "b"}])
