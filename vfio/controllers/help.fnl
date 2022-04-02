@@ -11,6 +11,8 @@
      [:line "  vfio list"]
      [:line "  vfio get [id]"]
      [:line "  vfio set [id] [attribute] [value]"]
+     [:line "  vfio config"]
+     [:line "  vfio help"]
      [:line ""]]))
 
 controller
