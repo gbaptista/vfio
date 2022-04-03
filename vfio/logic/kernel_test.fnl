@@ -26,4 +26,10 @@
     :key "rd.driver.pre"
     :value "vfio-pci"}])
 
+(t.eq (logic.build-options-for [])
+   [{:description "Enable IOMMU on Intel CPU." :key "intel_iommu" :value "on"}
+   {:description "Skip devices that cannot be passed through."
+    :key "iommu"
+    :value "pt"}])
+
 (t.run!)

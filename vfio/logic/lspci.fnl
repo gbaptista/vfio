@@ -31,10 +31,16 @@
     device))
 
 (fn logic.parse-name-and-code [raw]
-  (let [(from to) (string.find raw "%s%[.*%]$")
-        code      (if from (string.sub raw (+ from 2) (- to 1)) nil)
-        name      (string.gsub raw "%s%[.*%]$" "")]
-    { :name name :code code}))
+  (let [(from to) (string.find raw "%]*%s%[.*%]$")]
+
+    (var code (if from (string.sub raw (+ from 2) (- to 1)) nil))
+    (when (and code (string.find code "%["))
+      (set code (string.gsub code ".*%[" "")))
+
+    (let [name (if code
+                 (helper/string.strip (helper/string.gsub-raw raw (.. "[" code "]") ""))
+                 raw)]
+      { :name name :code code})))
 
 (fn logic.parse-address [raw]
   (let [parts-a  (helper/string.split ":" raw)

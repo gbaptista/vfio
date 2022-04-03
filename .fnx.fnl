@@ -1,6 +1,7 @@
-{:name    "my-package"
+{:name    "vfio"
  :version "0.0.1"
 
  :dependencies {
-  :fspec {:fennel/fnx {:git/github "gbaptista/fspec"}}
-  :supernova {:lua/rock ">= 0.0.2"}}}
+  :supernova {:lua/rock ">= 0.0.2"}
+  :fspec     {:fennel/fnx {:git/github "gbaptista/fspec"}}
+  :xrepl     {:fennel/local "../xrepl"}}}

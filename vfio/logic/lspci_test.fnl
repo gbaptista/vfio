@@ -2,6 +2,47 @@
 
 (local logic (require :vfio.logic.lspci))
 
+(t.eq (logic.parse-name-and-code "82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode] [2922]")
+      {:code :2922
+       :name "82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode]"})
+
+(t.eq (logic.device-to-list "0000:00:1f.2 \"SATA controller [0106]\" \"Intel Corporation [8086]\" \"82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode] [2922]\" -r02 -p01 \"Red Hat, Inc. [1af4]\" \"QEMU Virtual Machine [1100]\"")
+      ["0000:00:1f.2"
+       "SATA controller [0106]"
+       "Intel Corporation [8086]"
+       "82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode] [2922]"
+       "-r02 -p01"
+       "Red Hat, Inc. [1af4]"
+       "QEMU Virtual Machine [1100]"]
+      {:address {:bus :00
+                 :device :1f
+                 :domain :0000
+                 :function :2
+                 :id "0000:00:1f.2"}
+       :class {:code :0106 :name "SATA controller"}
+       :id "8086:2922"
+       :name {:code :2922
+              :name "82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode]"}
+       :vendor {:code :8086 :name "Intel Corporation"}})
+
+(t.eq (logic.list-to-named ["0000:00:1f.2"
+                            "SATA controller [0106]"
+                            "Intel Corporation [8086]"
+                            "82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode] [2922]"
+                            "-r02 -p01"
+                            "Red Hat, Inc. [1af4]"
+                            "QEMU Virtual Machine [1100]"])
+      {:address {:bus :00
+                 :device :1f
+                 :domain :0000
+                 :function :2
+                 :id "0000:00:1f.2"}
+       :class {:code :0106 :name "SATA controller"}
+       :id "8086:2922"
+       :name {:code :2922
+              :name "82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode]"}
+       :vendor {:code :8086 :name "Intel Corporation"}})
+
 (t.eq (logic.device-to-list "0000:00:1f.3 \"Audio device [0403]\" \"Intel Corporation [8086]\" \"Ice Lake-LP Smart Sound Technology Audio Controller [34c8]\" -r30 -p80 \"Dell [1028]\" \"Device [096d]\"")
       ["0000:00:1f.3"
        "Audio device [0403]"
@@ -21,16 +62,16 @@
                             "-r30 -p80"
                             "Dell [1028]"
                             "Device [096d]"])
-      {:address {:bus "00"
-           :device "1f"
-           :domain "0000"
-           :function "3"
-           :id "0000:00:1f.3"}
- :class {:code "0403" :name "Audio device"}
- :id "8086:34c8"
- :name {:code "34c8"
-        :name "Ice Lake-LP Smart Sound Technology Audio Controller"}
- :vendor {:code "8086" :name "Intel Corporation"}})
+      {:address {:bus :00
+                 :device :1f
+                 :domain :0000
+                 :function :3
+                 :id "0000:00:1f.3"}
+       :class {:code :0403 :name "Audio device"}
+       :id "8086:34c8"
+       :name {:code :34c8
+              :name "Ice Lake-LP Smart Sound Technology Audio Controller"}
+       :vendor {:code :8086 :name "Intel Corporation"}})
 
 (t.eq (logic.parse-devices "0000:00:00.0 \"Host bridge\" \"Intel Corporation\" \"Ice Lake-LP Processor Host Bridge/DRAM Registers\" -r03 \"Dell\" \"Device 096d\"
 0000:00:02.0 \"VGA compatible controller\" \"Intel Corporation\" \"Iris Plus Graphics G7\" -r07 \"Dell\" \"Device 096d\"")

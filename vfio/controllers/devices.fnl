@@ -30,7 +30,7 @@
 (fn controller.flags [device]
   (local flags [])
   (when (= (. device.config :passthrough) true)
-    (table.insert flags "p"))
+    (table.insert flags "passthrough"))
   (helper/list.join " " flags))
 
 (fn controller.get! [arguments]
