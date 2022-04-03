@@ -14,7 +14,7 @@ vfio
 vfio [id]
 vfio [id] [attribute] [value]
 vfio [id] passthrough true
-vfio grub
+vfio kernel
 vfio config
 vfio help
 ```
@@ -48,6 +48,7 @@ fnx run/test.fnl
 ## References
 
 - [PCI passthrough via OVMF](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF)
+- [Kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters)
 - [VFIO](https://www.kernel.org/doc/html/latest/driver-api/vfio.html)
 - [IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit)
 - [VFIO - How I game on Linux](https://b1nzy.com/blog/vfio.html)
